@@ -17,8 +17,8 @@ function App() {
     formData.append("gemini_api_key", geminiApiKey);
 
     try {
-      // const response = await fetch("https://resume-matcher-backend-whz7.onrender.com/api/upload", {
-      const response = await fetch("http://127.0.0.1:8000/api/upload", {
+      const response = await fetch("https://resume-matcher-backend-whz7.onrender.com/api/upload", {
+      // const response = await fetch("http://127.0.0.1:8000/api/upload", {
 
       method: "POST",
         body: formData,
