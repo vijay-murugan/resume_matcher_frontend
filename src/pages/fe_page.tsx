@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
-const PdfTextForm: React.FC<{ onSubmit: (pdfFile: File, text: string) => void }> = ({ onSubmit }) => {
+const PdfTextForm: React.FC<{ onSubmit: (pdfFile: File, text: string, geminiApiKey: string) => void }> = ({ onSubmit }) => {
   const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [text, setText] = useState("");
+  const [geminiApiKey, setGeminiApiKey] = useState("");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -20,7 +21,11 @@ const PdfTextForm: React.FC<{ onSubmit: (pdfFile: File, text: string) => void }>
       alert("Please upload a PDF file.");
       return;
     }
-    onSubmit(pdfFile, text);
+    if (!geminiApiKey) {
+      alert("Please enter your Gemini API key.");
+      return;
+    }
+    onSubmit(pdfFile, text, geminiApiKey);
   };
 
   return (
@@ -41,6 +46,16 @@ const PdfTextForm: React.FC<{ onSubmit: (pdfFile: File, text: string) => void }>
           id="text-input"
           value={text}
           onChange={handleTextChange}
+          style={{ width: "100%" }}
+        />
+      </div>
+      <div style={{ marginTop: "1rem" }}>
+        <label htmlFor="gemini-api-key">Gemini API key:</label>
+        <input
+          type="text"
+          id="gemini-api-key"
+          value={geminiApiKey}
+          onChange={e => setGeminiApiKey(e.target.value)}
           style={{ width: "100%" }}
         />
       </div>
